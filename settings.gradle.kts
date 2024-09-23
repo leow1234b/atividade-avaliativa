@@ -13,5 +13,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "avaliativa"
+rootProject.name = "Avaliativa"
 include(":app")

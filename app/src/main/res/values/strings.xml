@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">avaliativa</string>
+    <string name="app_name">Avaliativa</string>
+    <string name="detalhes">detalhes/%1$s</string>
 </resources>

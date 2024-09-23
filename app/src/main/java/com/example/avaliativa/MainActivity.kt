@@ -1,104 +1,123 @@
-@file:OptIn(ExperimentalMaterial3Api::class)
-
 package com.example.avaliativa
 
+
+
+import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.*
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.avaliativa.ui.theme.AvaliativaTheme
+import androidx.navigation.NavHostController
+import kotlin.coroutines.jvm.internal.CompletedContinuation.context
+import androidx.navigation.NavHost as NavHost1
+import com.example.avaliativa.DetalhesProduto as DetalhesProduto1
+import com.example.avaliativa.navigate as navigate1
+
+
+private val Nothing?.nome: String
+    get() {
+        TODO("Not yet implemented")
+    }
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            AvaliativaTheme {
-                Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-                    ProductRegistrationScreen()
-                }
-            }
+            // Configura o controlador de navegação e a ViewModel
+            val navController = rememberNavController()
+            val produtoViewModel: ProdutoViewModel = viewModel()
+            ProdutoViewModel(navController, produtoViewModel) // Chama sua função de navegação
         }
+    }
+
+    private fun rememberNavController(): Any {
+
+        return TODO("Provide the return value")
+    }
+
+    private fun viewModel(): ProdutoViewModel {
+        TODO("Not yet implemented")
     }
 }
 
-@Composable
-fun ProductRegistrationScreen() {
-    var productName by remember { mutableStateOf("") }
-    var category by remember { mutableStateOf("") }
-    var price by remember { mutableStateOf("") }
-    var stockQuantity by remember { mutableStateOf("") }
-    var message by remember { mutableStateOf("") }
-    val productList = remember { mutableStateListOf<Product>() }
 
+@Composable
+fun DetalhesProduto(nomeProduto: String, navController: NavHostController) {
+    // Aqui você pode buscar as informações do produto baseado no nome
+    // Para simplicidade, estamos usando dados fictícios
+    val produto = remember { Produto(nomeProduto, "Categoria A", 100.0, 10) } // Substitua pela sua lógica de obtenção de dados
+
+    // Exibe as informações do produto
     Column(modifier = Modifier.padding(16.dp)) {
-        Text(text = "Cadastro de Produto", style = MaterialTheme.typography.titleLarge)
+        Text(text = "Nome: ${produto.nome}")
+        Text(text = "Categoria: ${produto.categoria}")
+        Text(text = "Preço: R$ ${produto.preco}")
+        Text(text = "Quantidade: ${produto.quantidade} unidades")
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        TextField(
-            value = productName,
-            onValueChange = { productName = it },
-            label = { Text("Nome do Produto") },
-            modifier = Modifier.fillMaxWidth()
-        )
-        TextField(
-            value = category,
-            onValueChange = { category = it },
-            label = { Text("Categoria") },
-            modifier = Modifier.fillMaxWidth()
-        )
-        TextField(
-            value = price,
-            onValueChange = { price = it },
-            label = { Text("Preço") },
-            modifier = Modifier.fillMaxWidth(),
-            isError = price.toDoubleOrNull() == null && price.isNotEmpty()
-        )
-        TextField(
-            value = stockQuantity,
-            onValueChange = { stockQuantity = it },
-            label = { Text("Quantidade em Estoque") },
-            modifier = Modifier.fillMaxWidth(),
-            isError = stockQuantity.toIntOrNull() == null && stockQuantity.isNotEmpty()
-        )
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        Button(onClick = {
-            if (productName.isNotEmpty() && category.isNotEmpty() && price.toDoubleOrNull() != null && stockQuantity.toIntOrNull() != null) {
-                val newProduct = Product(productName, category, price.toDouble(), stockQuantity.toInt())
-                productList.add(newProduct)
-                message = "Produto cadastrado com sucesso!"
-                productName = ""
-                category = ""
-                price = ""
-                stockQuantity = ""
-            } else {
-                message = "Por favor, preencha todos os campos corretamente!"
-            }
-        }) {
-            Text(text = "Cadastrar")
-        }
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        if (message.isNotEmpty()) {
-            Text(text = message, style = MaterialTheme.typography.bodyMedium)
+        Button(onClick = { navController.popBackStack() }) {
+            Text(text = "Voltar")
         }
     }
 }
 
-data class Product(val name: String, val category: String, val price: Double, val quantity: Int)
+fun Produto(nomeProduto: String, s: String, d: Double, i: Int): Produto {
 
-@Preview(showBackground = true)
+    return TODO("Provide the return value")
+}
+
 @Composable
-fun DefaultPreview() {
-    AvaliativaTheme {
-        ProductRegistrationScreen()
+fun ProdutoViewModel(navController: NavHostController, produtoViewModel: ProdutoViewModel) {
+    NavHost1(navController, startDestination = "listaProdutos") {
+        composable("listaProdutos") {
+            ListaProdutosScreen(produtoViewModel = produtoViewModel, navController = navController)
+        }
+        composable("detalhes/{nomeProduto}") { backStackEntry ->
+            val nomeProduto = (backStackEntry.arguments?.getString("nomeProduto") ?: "").also {
+                DetalhesProduto1(nomeProduto = it, navController = navController)
+            }
+        }
     }
 }
+
+@Composable
+fun ListaProdutosScreen(produtoViewModel: ProdutoViewModel, navController: NavHostController) {
+    TODO("Not yet implemented")
+}
+
+fun composable(s: String, any: Any) {
+    TODO("Not yet implemented")
+}
+
+Button(onClick =
+private fun Nothing?.navigate(s: String) {
+    TODO("Not yet implemented")
+}
+
+{
+    val navController = null.also {
+        val produto: Nothing? = null
+        it.navigate1(s = context.getString(
+            R.string.detalhes,
+            produto.nome
+        ))
+    }
+}) {
+    Text(text = "Detaches")
+}
+
+fun cadastrarProduto(nome: String, categoria: String, preco: Double, quantidade: Int, context: Context) {
+    val novoProduto = Produto(nome, categoria, preco, quantidade)
+    Estoque.adicionarProduto(novoProduto, context)
+}
+
