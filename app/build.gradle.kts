@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "com.example.avaliativa"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.example.avaliativa"
@@ -50,7 +50,7 @@ android {
 }
 
 dependencies {
-
+    implementation("com.google.code.gson:gson:2.8.8")
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.6")
     implementation("androidx.activity:activity-compose:1.9.2")
